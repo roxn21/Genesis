@@ -1,20 +1,22 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
+from nltk.sentiment import SentimentIntensityAnalyzer
 
 router = APIRouter()
+sia = SentimentIntensityAnalyzer()
 
 class SentimentRequest(BaseModel):
     text: str
 
 @router.post("/analyze/")
 def analyze_sentiment(request: SentimentRequest):
-    text = request.text.lower()
+    sentiment_scores = sia.polarity_scores(request.text)
     
-    if any(word in text for word in ["good", "happy", "great", "amazing"]):
+    if sentiment_scores['compound'] >= 0.05:
         sentiment = "positive"
-    elif any(word in text for word in ["bad", "sad", "terrible", "worst"]):
+    elif sentiment_scores['compound'] <= -0.05:
         sentiment = "negative"
     else:
         sentiment = "neutral"
     
-    return {"sentiment": sentiment}
+    return {"sentiment": sentiment, "scores": sentiment_scores}
