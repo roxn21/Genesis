@@ -9,6 +9,7 @@ app = FastAPI(
 
 # Include routers
 app.include_router(sentiment.router, prefix="/v1", tags=["Sentiment Analysis"])
+app.include_router(health.router, prefix="/v1", tags=["Health Check"])  
 
 @app.get("/")
 def root():
