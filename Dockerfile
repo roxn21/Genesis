@@ -10,6 +10,8 @@ COPY . /app
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN python -c "import nltk; nltk.download('vader_lexicon')"
+
 # Expose the port the app runs on
 EXPOSE 8000
 

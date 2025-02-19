@@ -1,8 +1,11 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from nltk.sentiment import SentimentIntensityAnalyzer
+import nltk
 
 router = APIRouter()
+nltk.download('vader_lexicon')
+
 sia = SentimentIntensityAnalyzer()
 
 class SentimentRequest(BaseModel):
