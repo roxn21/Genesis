@@ -14,4 +14,3 @@ app.include_router(health.router, prefix="/v1", tags=["Health Check"])
 @app.get("/")
 def root():
     return {"message": "Sentiment Analysis API is running 🚀"}
-
